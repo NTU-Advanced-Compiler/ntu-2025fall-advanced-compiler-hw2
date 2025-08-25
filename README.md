@@ -1,4 +1,4 @@
-# Homework 4: SSA Construction for Bril
+# Homework 2: DCE and LVN for Bril
 
 ## Overview
 
