@@ -50,9 +50,11 @@ def trivial_dce(func):
 
 
 def drop_killed_local(block):
-    # TODO: 
-    # Delete instructions in a single basic block whose result is unused before the next assignment. 
-    # Return a bool indicating whether anything changed.
+    """ 
+    TODO:
+    1. Delete instructions in a single basic block whose result is unused before the next assignment. 
+    2. Return a bool indicating whether anything changed.
+    """
     pass
 
 
