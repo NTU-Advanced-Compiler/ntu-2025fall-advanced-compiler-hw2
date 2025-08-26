@@ -55,7 +55,7 @@ def drop_killed_local(block):
     1. Delete instructions in a single basic block whose result is unused before the next assignment. 
     2. Return a bool indicating whether anything changed.
     """
-    pass
+    return False
 
 
 def drop_killed_pass(func):
@@ -71,8 +71,6 @@ def drop_killed_pass(func):
 
 
 def trivial_dce_plus(func):
-    """Like `trivial_dce`, but also deletes locally killed instructions.
-    """
     while trivial_dce_pass(func) or drop_killed_pass(func):
         pass
 
@@ -81,7 +79,6 @@ def trivial_dce_plus(func):
 
 def localopt():
     modify_func = trivial_dce_plus
-
     # Apply the change to all the functions in the input program.
     bril = json.load(sys.stdin)
     for func in bril['functions']:
