@@ -260,7 +260,7 @@ def _canonicalize(value):
         return value
 
 
-def lvn(bril, prop=False, canon=False, fold=False):
+def lvn(bril):
     """Apply the local value numbering optimization to every basic block
     in every function.
     """
@@ -269,14 +269,14 @@ def lvn(bril, prop=False, canon=False, fold=False):
         for block in blocks:
             lvn_block(
                 block,
-                lookup=_lookup if prop else lambda v2n, v: v2n.get(v),
-                canonicalize=_canonicalize if canon else lambda v: v,
-                fold=_fold if fold else lambda n2c, v: None,
+                lookup=_lookup,
+                canonicalize=_canonicalize,
+                fold=_fold,
             )
         func['instrs'] = flatten(blocks)
 
 
 if __name__ == '__main__':
     bril = json.load(sys.stdin)
-    lvn(bril, '-p' in sys.argv, '-c' in sys.argv, '-f' in sys.argv)
+    lvn(bril)
     json.dump(bril, sys.stdout, indent=2, sort_keys=True)
