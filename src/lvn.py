@@ -65,132 +65,22 @@ def read_first(instrs):
 
 
 def lvn_block(block, lookup, canonicalize, fold):
-    """Use local value numbering to optimize a basic block. Modify the
-    instructions in place.
-
-    You can extend the basic LVN algorithm to bring interesting language
-    semantics with these functions:
-
-    - `lookup`. Arguments: a value-to-number map and a value. Return the
-      corresponding number (or None if it does not exist).
-    - `canonicalize`. Argument: a value. Returns an equivalent value in
-      a canonical form.
-    - `fold`. Arguments: a number-to-constant map  and a value. Return a
-      new constant if it can be computed directly (or None otherwise).
     """
-    # The current value of every defined variable. We'll update this
-    # every time a variable is modified. Different variables can have
-    # the same value number (if they represent identical computations).
-    var2num = Numbering()
+    TODO:
+    Implement local value numbering that supports commutative operations and constant folding.
+    The following helper functions may help you complete the job, directly calling them whenever needed. 
 
-    # The canonical variable holding a given value. Every time we're
-    # forced to compute a new value, we'll keep track of it here so we
-    # can reuse it later.
-    value2num = {}
-
-    # The *canonical* variable name holding a given numbered value.
-    # There is only one canonical variable per value number (so this is
-    # not the inverse of var2num). To make matters even more
-    # complicated, we will also keep a *list* of possible names here,
-    # where the first is the canonical one to use. This is only relevant
-    # when doing copy-propagation, and it helps with situations where a
-    # copy-propagated variable is later "clobbered" so we can fall back
-    # to a different variable holding the same value.
-    num2vars = {}
-
-    # Track constant values for values assigned with `const`.
-    num2const = {}
-
-    # Initialize the table with numbers for input variables. These
-    # variables are their own canonical source.
-    for var in read_first(block):
-        num = var2num.add(var)
-        num2vars[num] = [var]
-
-    for instr, last_write in zip(block, last_writes(block)):
-        # Look up the value numbers for all variable arguments,
-        # generating new numbers for unseen variables.
-        argvars = instr.get('args', [])
-        argnums = tuple(var2num[var] for var in argvars)
-
-        # Update argument variable names to canonical variables.
-        if 'args' in instr:
-            instr['args'] = [num2vars[n][0] for n in argnums]
-
-        # If we write to a variable, we "clobber" any previous value it
-        # may have held. Remove any entries that point to this variable
-        # as the "home" for old values.
-        if 'dest' in instr:
-            for rhs in num2vars.values():
-                if instr['dest'] in rhs:
-                    rhs.remove(instr['dest'])
-
-        # Non-call value operations are candidates for replacement. (We
-        # could conceivably include calls to pure functions as values,
-        # but determining purity would require an interprocedural
-        # analysis.)
-        val = None
-        if 'dest' in instr and 'args' in instr and instr['op'] != 'call':
-            # Construct a Value for this computation.
-            val = canonicalize(Value(instr['op'], argnums))
-
-            # Is this value already available?
-            num = lookup(value2num, val)
-            if num is not None:
-                # Mark this variable as containing the value.
-                var2num[instr['dest']] = num
-
-                # Replace the instruction with a copy or a constant.
-                if num in num2const:  # Value is a constant.
-                    instr.update({
-                        'op': 'const',
-                        'value': num2const[num],
-                    })
-                    del instr['args']
-                else:  # Value is in a variable.
-                    instr.update({
-                        'op': 'id',
-                        'args': [num2vars[num][0]],
-                    })
-                    num2vars[num].append(instr['dest'])
-                continue
-
-        # If this instruction produces a result, give it a number.
-        if 'dest' in instr:
-            newnum = var2num.add(instr['dest'])
-
-            # Record constant values.
-            if instr['op'] == 'const':
-                num2const[newnum] = instr['value']
-
-            if last_write:
-                # Preserve the variable name for other blocks.
-                var = instr['dest']
-            else:
-                # We must put the value in a new variable so it can be
-                # reused by another computation in the feature (in case
-                # the current variable name is reassigned before then).
-                var = 'lvn.{}'.format(newnum)
-
-            # Record the variable name and update the instruction.
-            num2vars[newnum] = [var]
-            instr['dest'] = var
-
-            if val is not None:
-                # Is this value foldable to a constant?
-                const = fold(num2const, val)
-                if const is not None:
-                    num2const[newnum] = const
-                    instr.update({
-                        'op': 'const',
-                        'value': const,
-                    })
-                    del instr['args']
-                    continue
-
-                # If not, record the new variable as the canonical
-                # source for the newly computed value.
-                value2num[val] = newnum
+    - `lookup`.
+        Arguments: a value-to-number map and a value. 
+        Return the corresponding number (or None if it does not exist).
+    - `canonicalize`. 
+        Argument: a value. 
+        Returns an equivalent value in a canonical form.
+    - `fold`. 
+        Arguments: a number-to-constant map  and a value. 
+        Return a new constant if it can be computed directly (or None otherwise).
+    """
+    pass
 
 
 def _lookup(value2num, value):
