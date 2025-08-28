@@ -1,0 +1,107 @@
+name: Autograding Tests
+on:
+  push:
+    branches: [main]
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Bril
+        run: |
+          bash install_bril.sh
+
+      - name: Problem-1 - Test testcase_1.bril
+        id: problem-1
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_1.bril
+          command: bash ./run_testcase.sh tests/local_dce/testcase_1.bril tests/local_dce/threadshold_1.txt local_dce
+          max-score: 1
+
+      - name: Problem-2 - Test testcase_2.bril
+        id: problem-2
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_2.bril
+          command: bash ./run_testcase.sh tests/local_dce/testcase_2.bril tests/local_dce/threadshold_2.txt local_dce
+          max-score: 1
+      
+      - name: Problem-3 - Test testcase_3.bril
+        id: problem-3
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_3.bril
+          command: bash ./run_testcase.sh tests/local_dce/testcase_3.bril tests/local_dce/threadshold_3.txt local_dce
+          max-score: 1
+
+      - name: Problem-4 - Test testcase_4.bril
+        id: problem-4
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_4.bril
+          command: bash ./run_testcase.sh tests/local_dce/testcase_4.bril tests/local_dce/threadshold_4.txt local_dce
+          max-score: 1
+
+      - name: Problem-5 - Test testcase_5.bril
+        id: problem-5
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_5.bril
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_5.bril tests/lvn+local_dce/threadshold_5.txt lvn+local_dce
+          max-score: 1
+
+      - name: Problem-6 - Test testcase_6.bril
+        id: problem-6
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_6.bril
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_6.bril tests/lvn+local_dce/threadshold_6.txt lvn+local_dce
+          max-score: 1
+
+      - name: Problem-7 - Test testcase_7.bril
+        id: problem-7
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_7.bril
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_7.bril tests/lvn+local_dce/threadshold_7.txt lvn+local_dce
+          max-score: 1
+
+      - name: Problem-8 - Test testcase_8.bril
+        id: problem-8
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Test testcase_8.bril
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_8.bril tests/lvn+local_dce/threadshold_8.txt lvn+local_dce
+          max-score: 1
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          PROBLEM-1_RESULTS: "${{ steps.problem-1.outputs.result }}"
+          PROBLEM-2_RESULTS: "${{ steps.problem-2.outputs.result }}"
+          PROBLEM-3_RESULTS: "${{ steps.problem-3.outputs.result }}"
+          PROBLEM-4_RESULTS: "${{ steps.problem-4.outputs.result }}"
+          PROBLEM-5_RESULTS: "${{ steps.problem-5.outputs.result }}"
+          PROBLEM-6_RESULTS: "${{ steps.problem-6.outputs.result }}"
+          PROBLEM-7_RESULTS: "${{ steps.problem-7.outputs.result }}"
+          PROBLEM-8_RESULTS: "${{ steps.problem-8.outputs.result }}"
+        with:
+          runners: problem-1, problem-2, problem-3, problem-4, problem-5, problem-6, problem-7, problem-8
