@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this homework, you will implement the local DCE(Dead Code Elimination) algorithm for the Bril intermediate representation (IR). 
+In this assignment, you will implement a local Dead Code Elimination (DCE) pass for the Bril intermediate representation (IR). The objective is to remove redundant instructions within basic blocks and then integrate DCE with Local Value Numbering (LVN) to further reduce dynamic instruction count. You will assess the impact of these transformations using the brili interpreter, comparing dynamic instruction counts before and after the passes are applied.
 
 ## Prerequisites
 
@@ -25,29 +25,29 @@ In this homework, you will implement the local DCE(Dead Code Elimination) algori
 ```
 homework-directory/
 ├── src/
-│ ├── driver.py
-│ ├── bril.py
-│ ├── cfg.py
-│ ├── dominance.py
-│ ├── is_ssa.py
-│ └── ssa_construct.py
+│   ├── form_blocks.py
+│   ├── local_dce.py
+│   ├── lvn.py
+│   └── util.py.py
 ├── tests/
-│ ├── simple.bril
-│ └── [additional test cases]
+│   ├── local_dce/
+│   │   ├── testcase_1.bril
+│   │   └── [additional test cases]
+│   └── lvn+local_dce/
+│       ├── testcase_5.bril
+│       └── [additional test cases]
 ├── bril/
 ├── install_bril.sh
-├── run_test_case.sh
-├── student_id.txt
+├── run_testcase.sh
 └── README.md
 ```
 
 
 ## Implementation Tasks
 
-1. CFG Construction (`cfg.py`)
-2. Dominator Computation (`dominance.py`)
-3. Phi-Function Insertion (`ssa_construct.py`)
-4. Variable Renaming (`ssa_construct.py`)
+1. Remove instructions that are never served as arguments of other instructions (`trivial_dce_pass` in `local_dce.py`)
+2. Delete instructions that is unused before next assignment  (`drop_killed_local` in `local_dce.py`)
+
 
 ## Running and Testing
 
@@ -74,16 +74,15 @@ diff original.out transformed.out
 
 ## Submission Instructions
 
-1. Open `student_id.txt` and replace the placeholder with your actual student ID.
-2. Implement all required functionalities in the `src/` directory.
-3. Test your implementation thoroughly.
-4. Commit and push your changes:
+1. Implement all required functionalities in the `src/` directory.
+2. Test your implementation thoroughly.
+3. Commit and push your changes:
    ```bash
-   git add src/ student_id.txt
-   git commit -m "Completed Homework 4"
+   git add src/ 
+   git commit -m "Completed Homework 2"
    git push origin main
    ```
-5. Verify that the GitHub Actions workflow passes all tests.
+4. Verify that the GitHub Actions workflow passes all tests.
 
 ## Do and Don't
 
@@ -96,4 +95,4 @@ diff original.out transformed.out
 
 - Engineering a Compiler
 - [Bril Language Reference](https://capra.cs.cornell.edu/bril/lang/index.html)
-- Course lecture notes on SSA form and related algorithms
+- Course lecture notes on DCE and LVN
