@@ -33,7 +33,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_1.bril
-          command: bash ./run_testcase.sh tests/local_dce/testcase_1.bril tests/local_dce/threadshold_1.txt local_dce
+          command: bash ./run_testcase.sh tests/local_dce/testcase_1.bril tests/local_dce/threshold_1.txt local_dce
           max-score: 1
 
       - name: Problem-2 - Test testcase_2.bril
@@ -41,7 +41,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_2.bril
-          command: bash ./run_testcase.sh tests/local_dce/testcase_2.bril tests/local_dce/threadshold_2.txt local_dce
+          command: bash ./run_testcase.sh tests/local_dce/testcase_2.bril tests/local_dce/threshold_2.txt local_dce
           max-score: 1
       
       - name: Problem-3 - Test testcase_3.bril
@@ -49,7 +49,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_3.bril
-          command: bash ./run_testcase.sh tests/local_dce/testcase_3.bril tests/local_dce/threadshold_3.txt local_dce
+          command: bash ./run_testcase.sh tests/local_dce/testcase_3.bril tests/local_dce/threshold_3.txt local_dce
           max-score: 1
 
       - name: Problem-4 - Test testcase_4.bril
@@ -57,7 +57,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_4.bril
-          command: bash ./run_testcase.sh tests/local_dce/testcase_4.bril tests/local_dce/threadshold_4.txt local_dce
+          command: bash ./run_testcase.sh tests/local_dce/testcase_4.bril tests/local_dce/threshold_4.txt local_dce
           max-score: 1
 
       - name: Problem-5 - Test testcase_5.bril
@@ -65,7 +65,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_5.bril
-          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_5.bril tests/lvn+local_dce/threadshold_5.txt lvn+local_dce
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_5.bril tests/lvn+local_dce/threshold_5.txt lvn+local_dce
           max-score: 1
 
       - name: Problem-6 - Test testcase_6.bril
@@ -73,7 +73,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_6.bril
-          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_6.bril tests/lvn+local_dce/threadshold_6.txt lvn+local_dce
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_6.bril tests/lvn+local_dce/threshold_6.txt lvn+local_dce
           max-score: 1
 
       - name: Problem-7 - Test testcase_7.bril
@@ -81,7 +81,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_7.bril
-          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_7.bril tests/lvn+local_dce/threadshold_7.txt lvn+local_dce
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_7.bril tests/lvn+local_dce/threshold_7.txt lvn+local_dce
           max-score: 1
 
       - name: Problem-8 - Test testcase_8.bril
@@ -89,7 +89,7 @@ jobs:
         uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Test testcase_8.bril
-          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_8.bril tests/lvn+local_dce/threadshold_8.txt lvn+local_dce
+          command: bash ./run_testcase.sh tests/lvn+local_dce/testcase_8.bril tests/lvn+local_dce/threshold_8.txt lvn+local_dce
           max-score: 1
 
       - name: Autograding Reporter
