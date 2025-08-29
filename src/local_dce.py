@@ -14,7 +14,7 @@ def trivial_dce_pass(func):
 
 
 
-def drop_killed_local(block):
+def drop_killed_pass(block):
     """
     TODO:
     1. Delete instructions in a single block whose result is unused before the next assignment. 
@@ -24,8 +24,6 @@ def drop_killed_local(block):
 
 
 def trivial_dce_plus(func):
-    """Like `trivial_dce`, but also deletes locally killed instructions.
-    """
     while trivial_dce_pass(func) or drop_killed_pass(func):
         pass
 
