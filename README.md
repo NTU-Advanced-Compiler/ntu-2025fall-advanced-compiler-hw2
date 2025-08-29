@@ -51,24 +51,33 @@ homework-directory/
 
 ## Running and Testing
 
-1. To generate the SSA form of your program:
+1. To generate the form after transformations:
 ```bash
-bril2json < ./tests/[your_test_program].bril | python3 ./src/driver.py | bril2txt > output.bril
-```
-2. To check if the generated program is in SSA form:
-```bash
-bril2json < ./output.bril | python3 src/is_ssa.py
-```
-3. To compare the execution output of the original and transformed programs:
-```bash
-# Original program
-bril2json < ./tests/[your_test_program].bril | brili [arguments] > original.out
+# DCE only
+bril2json < [path_to_testcase] | python3 ./src/local_dce.py | bril2txt > output.bril
 
-# Transformed SSA program
-bril2json < ./output.bril | brili [arguments] > transformed.out
+# Combine DCE with LVN
+bril2json < [path_to_testcase] | python3 ./src/lvn.py | python3 ./src/local_dce.py | bril2txt > output.bril
+```
+2. To check the dynamic instruction count:
+```bash
+#  Original program
+bril2json < [path_to_testcase] | brili -p
 
-# Compare outputs
-diff original.out transformed.out
+# DCE only
+bril2json < [path_to_testcase] | python3 ./src/local_dce.py | brili -p
+
+# Combine DCE with LVN
+bril2json < [path_to_testcase] | python3 ./src/lvn.py | python3 ./src/local_dce.py | brili -p
+```
+3. To check if the dynamic instruction count pass the threshold 
+```bash
+# DCE only
+bash run_testcase.sh [path_to_testcase] [path_to_corresponding_threshold_file] local_dce
+
+# Combine DCE with LVN
+bash run_testcase.sh [path_to_testcase] [path_to_corresponding_threshold_file] lvn+local_dce
+
 ```
 
 
